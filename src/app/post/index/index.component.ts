@@ -27,7 +27,7 @@ export class IndexComponent implements OnInit {
   // Each Column Definition results in one Column.
   // ,cellStyle: { 'text-align': "center" }
   public columnDefs: ColDef[] = [
-    {headerName: 'Id', field: 'id',headerClass: 'header-green' },
+    {headerName: 'Id', field: 'id' },
 		{headerName: 'Name', field: 'name', },
 		{headerName: 'State', field: 'state' },
 		{headerName: 'ZipCode', field: 'zip'},
