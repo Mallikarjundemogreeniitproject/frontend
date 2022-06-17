@@ -63,16 +63,21 @@ export class IndexComponent implements OnInit {
   }
 
   openEditDialog() {
-    const creditdialogRef = this.dialog.open(EditComponent, {
-      data: {
-        orderId: this.orderId,
-        orderData : this.orderData
-      },
-      disableClose: false,
-    });
-    creditdialogRef.afterClosed().subscribe(result => {
-      this.refreshData();
-    });
+    if(this.orderId!=0){
+      const creditdialogRef = this.dialog.open(EditComponent, {
+        data: {
+          orderId: this.orderId,
+          orderData : this.orderData
+        },
+        disableClose: false,
+      });
+      creditdialogRef.afterClosed().subscribe(result => {
+        this.refreshData();
+      });
+    }else{
+      this.errordanger = "danger";
+      this.errorMessage = "Please select a row to Edit the Order";
+    }
   }
 
   // Example of consuming Grid Event
@@ -116,15 +121,6 @@ export class IndexComponent implements OnInit {
     return !!/\d/.test(charStr);
   }
 
-  
-  editRecord(id:number){
-    if(id != 0){
-      this.router.navigateByUrl('post/'+id+'/edit');
-    }else{
-      this.errordanger = "danger";
-      this.errorMessage = "Please select a row to Edit the Order";
-    }
-  }
 
   deleteRecord(id:number){
     if(id != 0){
