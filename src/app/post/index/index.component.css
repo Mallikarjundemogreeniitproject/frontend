@@ -1,5 +1,6 @@
 @import 'ag-grid-community/dist/styles/ag-grid.css';
 @import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 html,
 body {
@@ -8,4 +9,10 @@ body {
     padding: 5px;
     box-sizing: border-box;
     -webkit-overflow-scrolling: touch;
+}
+
+.space {
+    width: 4px;
+    height: auto;
+    display: inline-block;
 }

@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="col-12">
+    <p class="alert alert-{{ errordanger }}">
+      <strong>{{ errorMessage }}</strong>
+    </p>
+    <div style="display: flex; justify-content: flex-end">
+
+      <div class="col-6">
+        <h1 style="align-content: center;">{{ pageTitle }}</h1>
+      </div>
+      <button class="btn btn-info" (click)="openCreateDialog()">
+        <mat-icon>add_circle_outline</mat-icon><span style="margin-top: 10px;">Create</span>
+      </button>
+      <div class="space">
+      </div>
+      <button class="btn btn-info" (click)="openEditDialog()">
+        <mat-icon>add_circle_outline</mat-icon><span style="margin-top: 10px;">Edit</span>
+      </button>
+      <div class="space">
+      </div>
+      <button class="btn btn-info" [id]="orderId" (click)="deleteRecord(orderId)">
+        <mat-icon>delete_outline</mat-icon>Delete
+      </button>
+      <div class="space">
+      </div>
+    </div>
+    <div class="space">
+    </div>
+    <ag-grid-angular style="width: 100%; height: 370px;" class="ag-theme-balham" [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef" [rowData]="posts" [animateRows]="true" (cellClicked)="onCellClicked($event)"
+      (gridReady)="refreshData()" [pagination]="true" [paginationPageSize]="paginationPageSize"
+      (rowValueChanged)="onRowValueChanged($event)">
+    </ag-grid-angular>
+  </div>
+</div>
