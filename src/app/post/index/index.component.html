@@ -1,25 +1,27 @@
-<div class="col-12">
-  <section class="pull-right" align="middle">
-    <p class="alert alert-{{ errordanger }}">
+<div class="container">
+  <div class="col-12">
+    <section class="pull-right headerSectionClass" align="middle">
+      <h1 style="align-content: center;">{{ pageTitle }}</h1>
+    </section>
+    <p class="{{ errordanger }}">
       <strong>{{ errorMessage }}</strong>
     </p>
-    <h1 style="align-content: center;">{{ pageTitle }}</h1>
-  </section>
-  <section class="pull-right" align="end">
-    <button mat-button color="primary" (click)="openCreateDialog()">
-      <mat-icon>add_circle_outline </mat-icon> Create
-    </button>
-    <button mat-button color="primary" (click)="openEditDialog()">
-      <mat-icon>mode_edit </mat-icon> Edit
-    </button>
-    <button mat-button color="primary" [id]="orderId" (click)="deleteRecord(orderId)">
-      <mat-icon>delete_outline </mat-icon> Delete
-    </button>
-  </section>
-  <section class="pull-right" align="middle">
-    <ag-grid-angular style="height: 450px;" class="ag-theme-balham grid" [columnDefs]="columnDefs"
+    <section class="pull-right" align="end" style="padding: 8px;">
+      <button mat-button color="primary" (click)="openCreateDialog()">
+        <mat-icon>add_circle_outline </mat-icon> Create
+      </button>&nbsp;
+      <button mat-button color="primary" (click)="openEditDialog()">
+        <mat-icon>mode_edit </mat-icon> Edit
+      </button>&nbsp;
+      <button mat-button color="primary" [id]="orderId" (click)="deleteRecord(orderId)">
+        <mat-icon>delete_outline </mat-icon> Delete
+      </button>
+    </section>
+  </div>
+  <div class="grid-wrapper">
+    <ag-grid-angular style="width: 100%; height: 100%;" class="ag-theme-balham" [columnDefs]="columnDefs"
       [defaultColDef]="defaultColDef" [rowData]="posts" [animateRows]="true" (cellClicked)="onCellClicked($event)"
       (gridReady)="refreshData()" [pagination]="true" [paginationPageSize]="paginationPageSize">
     </ag-grid-angular>
-  </section>
+  </div>
 </div>

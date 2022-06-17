@@ -25,9 +25,10 @@ export class IndexComponent implements OnInit {
   pageTitle : string = "GreenIT Application Challenge"
 
   // Each Column Definition results in one Column.
+  // ,cellStyle: { 'text-align': "center" }
   public columnDefs: ColDef[] = [
-    {headerName: 'Id', field: 'id' },
-		{headerName: 'Name', field: 'name' },
+    {headerName: 'Id', field: 'id',headerClass: 'header-green' },
+		{headerName: 'Name', field: 'name', },
 		{headerName: 'State', field: 'state' },
 		{headerName: 'ZipCode', field: 'zip'},
     {headerName: 'Amount', field: 'amount' },
@@ -36,7 +37,9 @@ export class IndexComponent implements OnInit {
 	];
   // DefaultColDef sets props common to all Columns
   public defaultColDef: ColDef = {
+    flex: 1,
     sortable: true,
+    resizable: true,
     filter: true,
   };
 
@@ -70,11 +73,18 @@ export class IndexComponent implements OnInit {
         this.refreshData();
       });
     }else{
-      this.errordanger = "danger";
+      this.errordanger = "alert alert-danger";
       this.errorMessage = "Please select a row to Edit the Order";
+      this.hideErrorMessage();
     }
   }
 
+  hideErrorMessage(){
+     setTimeout(() => {
+        this.errordanger = "";
+        this.errorMessage = "";
+      } , 3000);
+  }
   // Example of consuming Grid Event
   onCellClicked( e: CellClickedEvent): void {
     this.orderData = e.data;
@@ -91,8 +101,9 @@ export class IndexComponent implements OnInit {
          this.refreshData();
       });
     }else{
-      this.errordanger = "danger";
+      this.errordanger = "alert alert-danger";
       this.errorMessage = "Please select a row to Delete the Order";
+      this.hideErrorMessage();
     }
   }
 
