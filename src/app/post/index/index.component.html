@@ -1,8 +1,10 @@
 <div class="col-12">
-  <p class="alert alert-{{ errordanger }}">
-    <strong>{{ errorMessage }}</strong>
-  </p>
-  <h1 style="align-content: center;">{{ pageTitle }}</h1>
+  <section class="pull-right" align="middle">
+    <p class="alert alert-{{ errordanger }}">
+      <strong>{{ errorMessage }}</strong>
+    </p>
+    <h1 style="align-content: center;">{{ pageTitle }}</h1>
+  </section>
   <section class="pull-right" align="end">
     <button mat-button color="primary" (click)="openCreateDialog()">
       <mat-icon>add_circle_outline </mat-icon> Create
@@ -14,11 +16,10 @@
       <mat-icon>delete_outline </mat-icon> Delete
     </button>
   </section>
-  <div class="space">
-  </div>
-  <ag-grid-angular style="height: 450px;" ag-grid="gridOptions" class="ag-theme-balham" [columnDefs]="columnDefs"
-    [defaultColDef]="defaultColDef" [rowData]="posts" [animateRows]="true" (cellClicked)="onCellClicked($event)"
-    (gridReady)="refreshData()" [pagination]="true" [paginationPageSize]="paginationPageSize"
-    (rowValueChanged)="onRowValueChanged($event)">
-  </ag-grid-angular>
+  <section class="pull-right" align="middle">
+    <ag-grid-angular style="height: 450px;" class="ag-theme-balham grid" [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef" [rowData]="posts" [animateRows]="true" (cellClicked)="onCellClicked($event)"
+      (gridReady)="refreshData()" [pagination]="true" [paginationPageSize]="paginationPageSize">
+    </ag-grid-angular>
+  </section>
 </div>

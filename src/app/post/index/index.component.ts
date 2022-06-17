@@ -2,11 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PostService } from '../post.service';
 import { Post } from '../post';
 import { MatDialog, MatDialogRef, MatDialogConfig} from '@angular/material/dialog';
-import { filter } from 'rxjs/operators';
 import { CellClickedEvent, ColDef, GridReadyEvent, RowValueChangedEvent } from 'ag-grid-community';
-import { Observable } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { CreateComponent } from '../create/create.component';
 import { EditComponent } from '../edit/edit.component';
 
@@ -45,9 +41,8 @@ export class IndexComponent implements OnInit {
   };
 
   public paginationPageSize : number = 10;
-  public editType = 'fullRow';
-  constructor(public postService: PostService, private route: ActivatedRoute,
-    private router: Router,private modalService: NgbModal,private dialog: MatDialog) { }
+
+  constructor(public postService: PostService,private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -87,40 +82,6 @@ export class IndexComponent implements OnInit {
     this.errorMessage = "";
     this.errordanger = "";
   }
-
-  onRowValueChanged(event: RowValueChangedEvent) {
-    var data = event.data;
-    let zipValidate = this.isCharNumeric(data.zip);
-    let amountValidate = this.isCharNumeric(data.amount);
-    let qtyValidate = this.isCharNumeric(data.qty);
-    var validStatus = 1;
-    if(data.name === ''){
-      validStatus = 0;
-    }else if(data.state === ''){
-      validStatus = 0;
-    }else if(data.item === ''){
-      validStatus = 0;
-    }
-    if(validStatus == 1 && zipValidate == true && amountValidate == true && qtyValidate == true){
-       this.postService.update(data.id, data).subscribe(res => {
-        console.log('Post updated successfully!');
-        this.router.navigateByUrl('post/index');
-      });
-    }else{
-      this.isValidData();
-    }
-  }
-
-  isValidData(){
-    this.refreshData();
-    this.errordanger = "danger";
-    this.errorMessage = "Please Enter proper data to Update Order";
-  }
-
-  isCharNumeric(charStr:any) {
-    return !!/\d/.test(charStr);
-  }
-
 
   deleteRecord(id:number){
     if(id != 0){
