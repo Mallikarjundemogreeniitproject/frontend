@@ -1,12 +1,18 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { IndexComponent } from './index/index.component';
 
 import { PostService } from './post.service';
 
 describe('PostService', () => {
   let service: PostService;
-
+  let fixture: ComponentFixture<IndexComponent>;
+  let component : IndexComponent; 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+       imports: [FormsModule],
+      declarations: [IndexComponent]
+    });
     service = TestBed.inject(PostService);
   });
 
@@ -21,5 +27,17 @@ describe('PostService', () => {
     service.delete(0);
     expect(service.getAll.length).toBeLessThan(1);
   });
+
+  it('should be created', () => {
+    const service: PostService = TestBed.get(PostService);
+    expect(service).toBeTruthy();
+  });
+
+  it("should use the postsList from the service", () => {
+    const postService = fixture.debugElement.injector.get(PostService);
+    fixture.detectChanges();
+    expect(postService.getAll()).toBeTruthy(); // toContain(component.posts);
+  });
+
   
 });

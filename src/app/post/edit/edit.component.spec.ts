@@ -17,5 +17,13 @@ describe('EditComponent', () => {
     fixture.detectChanges();
   });
 
+   //This is test suite
+  it("test spec", function() {
+     expect( expression ).toEqual(true);
+  }); 
  
 });
+function expression(expression: any) {
+  throw new Error('Function not implemented.');
+}
+

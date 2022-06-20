@@ -6,7 +6,7 @@
     <p class="{{ errordanger }}">
       <strong>{{ errorMessage }}</strong>
     </p>
-    <section class="pull-right" align="end" style="padding: 8px;">
+    <section class="pull-right" align="end">
       <button mat-button color="primary" (click)="openCreateDialog()">
         <mat-icon>add_circle_outline </mat-icon> Create
       </button>&nbsp;
@@ -18,6 +18,7 @@
       </button>
     </section>
   </div>
+  <p class=""></p>
   <div class="grid-wrapper">
     <ag-grid-angular style="width: 100%; height: 100%;" class="ag-theme-balham" [columnDefs]="columnDefs"
       [defaultColDef]="defaultColDef" [rowData]="posts" [animateRows]="true" (cellClicked)="onCellClicked($event)"
