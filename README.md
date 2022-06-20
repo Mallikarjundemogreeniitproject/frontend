@@ -7,9 +7,10 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Create a new folder and clone the project using below steps
 - Clone the Project by using git
 	- git clone https://github.com/Mallikarjundemogreeniitproject/frontend.git
-    - Once the Project is clone then execute the command "npm install" for installing dependency packages for the project
-    - Run the command "ng serve -o" or "npm start" to execute the project
-    - Navigate to `http://localhost:4200/` in browser
+	- switch to "master" branch using command as "git checkout master"
+  - Once the Project is clone then execute the command "npm install" for installing dependency packages for the project
+  - Run the command "ng serve -o" or "npm start" to execute the project
+  - Navigate to `http://localhost:4200/` in browser
 
 
 ## Development server
