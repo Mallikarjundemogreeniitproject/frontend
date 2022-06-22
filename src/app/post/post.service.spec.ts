@@ -1,43 +1,69 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { delay, of } from 'rxjs';
 import { IndexComponent } from './index/index.component';
-
 import { PostService } from './post.service';
 
-describe('PostService', () => {
-  let service: PostService;
-  let fixture: ComponentFixture<IndexComponent>;
-  let component : IndexComponent; 
+describe('Post Service', () => {
+  let httpClientSpy: jasmine.SpyObj<HttpClient>;
+  let postService: PostService;
+  let POSTS = [
+     {
+            "id": 1,
+            "name": "Mallikarjun H",
+            "state": "KA",
+            "zip": "585101",
+            "amount": "100",
+            "qty": "12",
+            "item": "It123"
+        },
+        {
+            "id": 2,
+            "name": "Mallikarjun",
+            "state": "KA",
+            "zip": "585101",
+            "amount": "100",
+            "qty": "12",
+            "item": "It123"
+        }
+  ];
   beforeEach(() => {
+    let httpClientSpyObj = jasmine.createSpyObj('HttpClient', ['GET']);
     TestBed.configureTestingModule({
-       imports: [FormsModule],
-      declarations: [IndexComponent]
+      providers: [
+        PostService,
+        { provide: HttpClient, useValue: httpClientSpyObj}
+      ],
     });
-    service = TestBed.inject(PostService);
+    postService = TestBed.inject(PostService);
+    httpClientSpy = TestBed.inject(HttpClient) as jasmine.SpyObj<HttpClient>;
   });
-
-  it("should create a post in an array", () => {
-    const qouteText = "This is my first post";
-    service.create(qouteText);
-    expect(service.getAll.length).toBeGreaterThanOrEqual(1);
-  });
-
-  it("should remove a created post from the array of posts", () => {
-    service.create("This is my first post");
-    service.delete(0);
-    expect(service.getAll.length).toBeLessThan(1);
-  });
-
-  it('should be created', () => {
-    const service: PostService = TestBed.get(PostService);
-    expect(service).toBeTruthy();
-  });
-
-  it("should use the postsList from the service", () => {
-    const postService = fixture.debugElement.injector.get(PostService);
-    fixture.detectChanges();
-    expect(postService.getAll()).toBeTruthy(); // toContain(component.posts);
-  });
-
   
+
+ 
+  it('should return expected posts when getAll is called', (done: DoneFn) => {
+      httpClientSpy.get.and.returnValue(of(POSTS));
+     console.log("sssss");
+      postService.getAll().subscribe({
+        next: (posts) => {
+          console.log(posts);
+          expect(posts).toEqual(POSTS);
+          done();
+        },
+        error: () => {
+          done.fail;
+        },
+      });
+      expect(httpClientSpy.get).toHaveBeenCalledTimes(1);
+  });
+/*
+  it('should call ngOnInit', () => {
+    const fixture = TestBed.createComponent(IndexComponent);
+    const component = fixture.debugElement.componentInstance;
+    let spy_getAll = spyOn(component,"refreshData").and.returnValue([]);
+    component.ngOnInit();
+    expect(component.posts).toEqual([]);
+  });
+  */
+
 });

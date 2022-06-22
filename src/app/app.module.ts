@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { PostService } from './post/post.service';
 
 
 
@@ -42,7 +43,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     NgbModule,
     MatProgressSpinnerModule
   ],
-  providers: [],
+  providers: [PostService],
   bootstrap: [AppComponent]
 
 })

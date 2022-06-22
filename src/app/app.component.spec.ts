@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
@@ -16,12 +16,15 @@ describe('AppComponent', () => {
       { path: 'post/create', component: CreateComponent },
       { path: 'post/:postId/edit', component: EditComponent } 
     ];
+    let fixture: ComponentFixture<AppComponent>;
+    let component: AppComponent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        RouterModule.forRoot(routes)
+        RouterModule.forRoot(routes),
+        HttpClientModule
       ],
       declarations: [
         AppComponent,
@@ -32,6 +35,12 @@ describe('AppComponent', () => {
     }).compileComponents();
   });
 
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+  
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
@@ -43,5 +52,5 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     expect(app.title).toEqual('GreenIT Application Challenge');
   });
-
+  
 });

@@ -45,9 +45,13 @@ export class IndexComponent implements OnInit {
 
   public paginationPageSize : number = 10;
 
-  constructor(public postService: PostService,private dialog: MatDialog) { }
+  constructor(public postService: PostService,private dialog: MatDialog) { 
+    this.posts = [];
+  }
+
 
   ngOnInit(): void {
+     this.refreshData();
   }
 
 
