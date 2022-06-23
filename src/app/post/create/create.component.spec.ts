@@ -1,10 +1,10 @@
 import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule,HttpTestingController } from '@angular/common/http/testing';
 import { CreateComponent } from './create.component';
 import { RouterTestingModule } from "@angular/router/testing";
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PostService } from '../post.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,9 +16,12 @@ describe('CreateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormsModule,HttpClientModule,HttpClientTestingModule,RouterTestingModule,MatDialogModule,MatStepperModule, MatButtonModule, MatIconModule],
+      imports: [FormsModule,HttpClientModule,HttpClientTestingModule,RouterTestingModule,MatDialogModule,
+        MatStepperModule, MatButtonModule, MatIconModule,ReactiveFormsModule],
       declarations: [ CreateComponent ],
-      providers: [ PostService,{ provide: MatDialog,MatDialogRef, useValue: {}, } ]
+       providers: [ PostService, { provide: MatDialog, useValue: {} },
+        { provide: MatDialogRef, useValue:{} },
+      	{ provide: MAT_DIALOG_DATA, useValue: {} }]
     })
     .compileComponents();
 
@@ -28,21 +31,16 @@ describe('CreateComponent', () => {
   });
 
 
-  it('should create the create app', () => {
+  it('should create the create app CreateComponent', () => {
     const fixture = TestBed.createComponent(CreateComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it('should be created Service', inject([PostService], (service: PostService) => {
-    expect(service).toBeTruthy();
-  }));
-
-  it('should return an error when the server returns a 404', (done: DoneFn) => {
-    const errorResponse = new HttpErrorResponse({
-      error: 'test 404 error',
-      status: 404, statusText: 'Not Found'
-      });
+   it('should have expected Create Dialog model Title', () => {
+        const appElement = fixture.nativeElement;
+        const cellElements = appElement.querySelectorAll('.modal-title');
+        expect(cellElements[0].textContent).toEqual('Create New Post');
   });
 
 });

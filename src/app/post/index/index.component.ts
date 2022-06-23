@@ -117,8 +117,10 @@ export class IndexComponent implements OnInit {
         const values = Object.values(results);
         var selectedArray : any = values[1];
         let rowDat = []
-        for (var val of selectedArray) {
-          rowDat.push({"id":val.id,"name":val.name,"state":val.state,"zip":val.zip,"amount":val.amount,"qty":val.qty,"item":val.item});
+        if(selectedArray){
+          for (var val of selectedArray) {
+            rowDat.push({"id":val.id,"name":val.name,"state":val.state,"zip":val.zip,"amount":val.amount,"qty":val.qty,"item":val.item});
+          }
         }
         this.posts = rowDat;
     });   

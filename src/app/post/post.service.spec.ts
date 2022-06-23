@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { delay, of } from 'rxjs';
 import { IndexComponent } from './index/index.component';
 import { PostService } from './post.service';
@@ -39,8 +39,11 @@ describe('Post Service', () => {
     httpClientSpy = TestBed.inject(HttpClient) as jasmine.SpyObj<HttpClient>;
   });
   
+ it('should be created Service', inject([PostService], (service: PostService) => {
+    expect(service).toBeTruthy();
+}));
 
- 
+ /*
   it('should return expected posts when getAll is called', (done: DoneFn) => {
       httpClientSpy.get.and.returnValue(of(POSTS));
      console.log("sssss");
@@ -56,7 +59,7 @@ describe('Post Service', () => {
       });
       expect(httpClientSpy.get).toHaveBeenCalledTimes(1);
   });
-/*
+
   it('should call ngOnInit', () => {
     const fixture = TestBed.createComponent(IndexComponent);
     const component = fixture.debugElement.componentInstance;
