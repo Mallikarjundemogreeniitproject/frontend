@@ -51,7 +51,7 @@ export class IndexComponent implements OnInit {
 
 
   ngOnInit(): void {
-     this.refreshData();
+    // this.refreshData();
   }
 
 

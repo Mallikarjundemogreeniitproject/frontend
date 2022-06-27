@@ -2,7 +2,7 @@ import { ComponentFixture, inject, TestBed,async, fakeAsync, tick } from '@angul
 
 import { IndexComponent } from './index.component';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { PostService } from '../post.service';
 import { Post } from '../post';
@@ -15,6 +15,8 @@ import { MatIconModule } from '@angular/material/icon';
 import * as Rx from 'rxjs';
 import { delay } from "rxjs/operators";
 import { AgGridModule } from 'ag-grid-angular';
+import { of } from 'rxjs';
+import { post } from 'cypress/types/jquery';
 
 const expectedHeroes: Post[] =[{"id":1,"name":"Mallikarjun H","state":"KA","zip":"585101","amount":"100","qty":"12","item":"It123"},{"id":2,"name":"Mallikarjun","state":"KA","zip":"585101","amount":"100","qty":"12","item":"It123"}];
 
@@ -24,6 +26,7 @@ describe('IndexComponent', () => {
   let fixture: ComponentFixture<IndexComponent>;
   let httpMock : HttpClientTestingModule;
   let httpController: HttpTestingController;
+  let httpClient : HttpClient;
   let service: PostService;
 	let url = 'http://localhost:8000/';
 
@@ -34,7 +37,7 @@ describe('IndexComponent', () => {
       declarations: [ IndexComponent ],
       imports: [FormsModule, HttpClientTestingModule,HttpClientModule,FormsModule,MatDialogModule, MatButtonModule,MatIconModule,
         AgGridModule.withComponents([CreateComponent])], 
-      providers: [ PostService, { provide: MatDialog, useValue: [], },
+      providers: [ PostService, { provide: MatDialog, useValue: [expectedHeroes], },
         { provide: MatDialogRef, useValue:{} },
       	{ provide: MAT_DIALOG_DATA, useValue: [expectedHeroes] },
         CreateComponent,EditComponent ],
@@ -43,19 +46,14 @@ describe('IndexComponent', () => {
     .compileComponents();
 
 
-    service = TestBed.get(PostService);
+    service = TestBed.inject(PostService);
     httpController = TestBed.get(HttpTestingController);
     fixture = TestBed.createComponent(IndexComponent);
+    httpClient = TestBed.inject(HttpClient);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-   beforeEach(() => {
-    fixture = TestBed.createComponent(IndexComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-    
   // it('should be Create orders Service',() => {
   //   const postsData : any = [{"id":1,"name":"Mallikarjun H","state":"KA","zip":"585101","amount":"100","qty":"12","item":"It123"}];
   //   service.create(postsData).subscribe(posts=>{
@@ -116,7 +114,7 @@ describe('IndexComponent', () => {
         const headerTitles = Array.from(headerCells).map((cell: any) =>
             cell.textContent.trim()
         );
-        expect(headerTitles).toEqual(['Id', 'Name','State','ZipCode','Amount','Qty','Item Number']);
+        expect(headerTitles).toEqual(['Id', 'Name','State','ZipCode','Amount','Qty']);
     });
 
     it('should have the value of ag grid cells in IndexComponent', () => {
@@ -132,7 +130,14 @@ describe('IndexComponent', () => {
         // expect(cellElements[2].textContent).toEqual("84");
     });
     
- 
+
+    it('should call ngOnInit', () => {
+      const fixture = TestBed.createComponent(IndexComponent);
+      const component = fixture.debugElement.componentInstance;
+      let spy_getAll = spyOn(component,"refreshData").and.returnValue([]);
+      component.ngOnInit();
+      expect(component.posts).toEqual([]);
+    });
 
 });
 

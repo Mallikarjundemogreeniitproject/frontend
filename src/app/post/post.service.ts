@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
    
 import {  Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
   
 import { Post } from './post';
    
@@ -31,8 +31,12 @@ export class PostService {
   getAll(): Observable<Post[]> {
     return this.httpClient.get<Post[]>(this.apiURL+'/orders/',  this.httpOptions)
     .pipe(
+      map(res => {
+        console.log(res);
+         return res;
+      }),
       catchError(this.errorHandler)
-    )
+    );
   }
    
   create(post: any): Observable<Post> {
