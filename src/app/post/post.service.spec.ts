@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
-import { delay, of } from 'rxjs';
+import { delay, of } from 'rxjs'; 
 import { IndexComponent } from './index/index.component';
 import { PostService } from './post.service';
 import { createSpyFromClass, Spy } from 'jasmine-auto-spies';
